@@ -18,7 +18,7 @@ const initialState: ConversionState = {
 };
 
 export const fetchRates = createAsyncThunk(
-  "currency/fetchRates",
+  "converter/fetchRates",
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
@@ -37,7 +37,7 @@ export const fetchRates = createAsyncThunk(
 );
 
 const currencySlice = createSlice({
-  name: "currency",
+  name: "converter",
   initialState,
   reducers: {},
   extraReducers: (builder) => {

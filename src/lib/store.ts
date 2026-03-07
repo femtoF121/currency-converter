@@ -9,7 +9,7 @@ import {
   REHYDRATE,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // localStorage
-import currencyReducer from "./features/currency/currencySlice";
+import currencyReducer from "./features/converter/converterSlice";
 
 const rootReducer = combineReducers({
   currency: currencyReducer,
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["currency"],
+  whitelist: ["converter"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
