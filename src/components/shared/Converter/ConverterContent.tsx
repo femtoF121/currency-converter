@@ -5,10 +5,12 @@ import { CardContent } from "@/components/ui/card";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CURRENCIES } from "@/constants/currencies";
+import { CURRENCIES, INITIAL_FROM, INITIAL_TO } from "@/constants/currencies";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useAppSelector } from "@/lib/hooks";
+import { addHistoryItem } from "@/lib/features/history/historySlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { calculateConversion } from "@/lib/utils";
 import { CurrencyCode } from "@/types/currency";
 import { ArrowUpDown, TrendingUp } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -18,22 +20,22 @@ export function ConvertorContent() {
   const [amount, setAmount] = useState("1");
   const debouncedAmount = +useDebounce(amount, 500);
 
-  const [from, setFrom] = useState<CurrencyCode>("USD");
-  const [to, setTo] = useState<CurrencyCode>("UAH");
+  const [from, setFrom] = useState<CurrencyCode>(INITIAL_FROM);
+  const [to, setTo] = useState<CurrencyCode>(INITIAL_TO);
 
   const { rates, status } = useAppSelector((state) => state.currency);
+  const dispatch = useAppDispatch();
 
-  const result = useMemo(() => {
-    const fromRate = rates[from];
-    const toRate = rates[to];
-
-    if (!fromRate || !toRate) return 0;
-
-    const crossRate = toRate / fromRate;
-    return Number((+debouncedAmount * crossRate).toFixed(2));
-  }, [debouncedAmount, from, to, rates]);
+  const result = useMemo(
+    () => calculateConversion(debouncedAmount, rates[from], rates[to]),
+    [debouncedAmount, from, to, rates],
+  );
 
   const resultRef = useAnimatedCounter(result);
+
+  const handleSaveToHistory = () => {
+    dispatch(addHistoryItem({ from, to, amount: debouncedAmount, result }));
+  };
 
   const handleSwap = () => {
     setFrom(to);
@@ -109,12 +111,17 @@ export function ConvertorContent() {
           onValueChange={setTo}
         />
       </div>
-      <div className="flex items-center gap-2 px-4 py-2 mt-4 rounded-lg bg-amber-50 border border-amber-200">
-        <TrendingUp className="text-amber-600" />
-        <p className="text-sm text-amber-800 font-medium">
-          Rate: 1 {from} =
-          {` ${Number((rates[to] || 0) / (rates[from] || 1)).toFixed(4)} ${to}`}
-        </p>
+      <div className="flex gap-4 mt-4">
+        <div className="flex-1 flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-50 border border-amber-200">
+          <TrendingUp className="text-amber-600" />
+          <p className="text-sm text-amber-800 font-medium">
+            Rate: 1 {from} =
+            {` ${Number((rates[to] || 0) / (rates[from] || 1)).toFixed(4)} ${to}`}
+          </p>
+        </div>
+        <Button variant="outline" size="lg" onClick={handleSaveToHistory}>
+          Save To History
+        </Button>
       </div>
     </CardContent>
   );

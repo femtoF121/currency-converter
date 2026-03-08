@@ -18,13 +18,3 @@ export interface Currency {
 }
 
 export type ExchangeRates = Partial<Record<CurrencyCode, number>>;
-
-export interface HistoryItem {
-  id: string;
-  from: Currency;
-  to: Currency;
-  amount: number;
-  rate: number;
-  result: number;
-  date: string;
-}
