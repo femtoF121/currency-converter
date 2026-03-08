@@ -40,12 +40,14 @@ export function ConverterHeader() {
 
   return (
     <CardHeader>
-      <div className="flex items-center gap-2">
-        <Wallet className="text-emerald-600" />
-        <CardTitle className="text-lg font-bold uppercase tracking-wider">
-          Currency converter
-        </CardTitle>
-        <div className="ml-auto flex flex-col items-center gap-1">
+      <div className="flex flex-col gap-4 sm:flex-row justify-between">
+        <div className="flex items-center gap-2">
+          <Wallet className="text-emerald-600" />
+          <CardTitle className="text-lg font-bold uppercase tracking-wider">
+            Currency converter
+          </CardTitle>
+        </div>
+        <div className="flex flex-row sm:flex-col justify-between items-center">
           {status === "loading" ? (
             <Skeleton className="h-6 w-36 rounded-full" />
           ) : (

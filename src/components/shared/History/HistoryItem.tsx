@@ -9,8 +9,8 @@ export function HistoryItem({ item }: HistoryItemProps) {
   const { from, to, amount, result, timestamp } = item;
 
   return (
-    <li className="p-4 rounded-lg bg-white border border-l-6 border-l-emerald-500 flex items-center justify-between group hover:translate-x-3 hover:bg-emerald-50">
-      <div className="flex items-center gap-8">
+    <li className="px-4 py-2 sm:py-4 rounded-lg bg-white border border-l-6 border-l-emerald-500 flex items-center justify-between group hover:translate-x-3 hover:bg-emerald-50">
+      <div className="flex items-center gap-4 sm:gap-8">
         <div>
           <span className="text-xs font-bold text-slate-500 uppercase">
             From

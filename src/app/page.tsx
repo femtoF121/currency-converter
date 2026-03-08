@@ -13,7 +13,7 @@ export default function HomePage() {
 
       <div className="max-w-5xl mx-auto px-4 py-8 pb-6 sm:pt-16">
         <AnimateIn targetClass=".animate-up">
-          <header className="text-center mb-10 animate-up">
+          <header className="text-center mb-6 sm:mb-10 animate-up">
             <h1 className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight mb-4">
               Green<span className="text-emerald-600">Exchange</span>
             </h1>

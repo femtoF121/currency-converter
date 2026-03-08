@@ -7,9 +7,14 @@ import { useRef } from "react";
 interface AnimateInProps {
   children: React.ReactNode;
   targetClass: string;
+  className?: string;
 }
 
-export const AnimateIn = ({ children, targetClass }: AnimateInProps) => {
+export const AnimateIn = ({
+  children,
+  targetClass,
+  className,
+}: AnimateInProps) => {
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -17,7 +22,7 @@ export const AnimateIn = ({ children, targetClass }: AnimateInProps) => {
       gsap.from(targetClass, {
         y: 30,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.6,
         stagger: 0.3,
         ease: "power2.in",
       });
@@ -25,5 +30,9 @@ export const AnimateIn = ({ children, targetClass }: AnimateInProps) => {
     { scope: container },
   );
 
-  return <div ref={container}>{children}</div>;
+  return (
+    <div className={className} ref={container}>
+      {children}
+    </div>
+  );
 };

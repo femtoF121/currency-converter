@@ -40,7 +40,9 @@ export function History({ className }: { className?: string }) {
   return (
     <section className={cn("max-w-xl mx-auto p-4", className)}>
       <div className="flex items-center justify-between pb-2 border-b-2 border-slate-200">
-        <h2 className="text-2xl font-bold text-slate-800">Last Conversions</h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-slate-800">
+          Last Conversions
+        </h2>
         <Button
           variant="ghost"
           size="sm"
