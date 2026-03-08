@@ -5,43 +5,29 @@ import { CardContent } from "@/components/ui/card";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { CURRENCIES, INITIAL_FROM, INITIAL_TO } from "@/constants/currencies";
+import { CURRENCIES } from "@/constants/currencies";
 import { useAnimatedCounter } from "@/hooks/useAnimatedCounter";
-import { useDebounce } from "@/hooks/useDebounce";
-import { addHistoryItem } from "@/lib/features/history/historySlice";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { calculateConversion } from "@/lib/utils";
-import { CurrencyCode } from "@/types/currency";
+import { useConverter } from "@/hooks/useConverter";
 import { ArrowUpDown, TrendingUp } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
 import { CurrencySelect } from "../CurrencySelect";
 
 export function ConvertorContent() {
-  const [amount, setAmount] = useState("1");
-  const debouncedAmount = +useDebounce(amount, 500);
-
-  const [from, setFrom] = useState<CurrencyCode>(INITIAL_FROM);
-  const [to, setTo] = useState<CurrencyCode>(INITIAL_TO);
-
-  const { rates, status } = useAppSelector((state) => state.currency);
-  const dispatch = useAppDispatch();
-
-  const result = useMemo(
-    () => calculateConversion(debouncedAmount, rates[from], rates[to]),
-    [debouncedAmount, from, to, rates],
-  );
+  const {
+    amount,
+    setAmount,
+    from,
+    setFrom,
+    to,
+    setTo,
+    result,
+    status,
+    currentRate,
+    handleSaveToHistory,
+    handleSwap,
+  } = useConverter();
 
   const resultRef = useAnimatedCounter(result);
-
-  const handleSaveToHistory = () => {
-    dispatch(addHistoryItem({ from, to, amount: debouncedAmount, result }));
-  };
-
-  const handleSwap = () => {
-    setFrom(to);
-    setTo(from);
-  };
 
   return (
     <CardContent>
@@ -117,8 +103,7 @@ export function ConvertorContent() {
         <div className="flex-1 flex items-center gap-2 px-4 py-2 rounded-md bg-amber-50 outline outline-amber-200">
           <TrendingUp className="text-amber-600" />
           <p className="text-sm text-amber-800 font-medium">
-            Rate: 1 {from} =
-            {` ${Number((rates[to] || 0) / (rates[from] || 1)).toFixed(4)} ${to}`}
+            Rate: 1 {from} ={` ${currentRate} ${to}`}
           </p>
           <Button
             size="sm"
