@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { calculateConversion } from "@/lib/utils";
 import { CurrencyCode } from "@/types/currency";
 import { ArrowUpDown, TrendingUp } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CurrencySelect } from "../CurrencySelect";
 
@@ -112,12 +113,20 @@ export function ConvertorContent() {
         />
       </div>
       <div className="flex gap-4 mt-4">
-        <div className="flex-1 flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-50 border border-amber-200">
+        <div className="flex-1 flex items-center gap-2 px-4 rounded-md bg-amber-50 border border-amber-200">
           <TrendingUp className="text-amber-600" />
           <p className="text-sm text-amber-800 font-medium">
             Rate: 1 {from} =
             {` ${Number((rates[to] || 0) / (rates[from] || 1)).toFixed(4)} ${to}`}
           </p>
+          <Button
+            size="sm"
+            variant="link"
+            className="ml-auto p-0 h-auto text-amber-600"
+            asChild
+          >
+            <Link href={`/analytics/${from}-${to}`}>See more</Link>
+          </Button>
         </div>
         <Button variant="outline" size="lg" onClick={handleSaveToHistory}>
           Save To History
