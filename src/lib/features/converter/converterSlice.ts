@@ -18,17 +18,23 @@ const initialState: ConversionState = {
 };
 
 export const fetchRates = createAsyncThunk(
-  "converter/fetchRates",
+  "currency/fetchRates",
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `https://v6.exchangerate-api.com/v6/${process.env.NEXT_PUBLIC_CURRENCY_API_KEY}/latest/USD`,
+        "https://api.frankfurter.app/latest?from=USD",
       );
 
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) {
+        throw new Error("Failed to fetch rates from Frankfurter");
+      }
 
       const data = await response.json();
-      return data.conversion_rates;
+
+      return {
+        ...data.rates,
+        USD: 1,
+      };
     } catch (error) {
       if (error instanceof Error) return rejectWithValue(error.message);
       return rejectWithValue("An unknown error occurred");

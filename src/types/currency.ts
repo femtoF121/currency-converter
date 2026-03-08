@@ -1,5 +1,4 @@
 export type CurrencyCode =
-  | "UAH"
   | "USD"
   | "EUR"
   | "GBP"
@@ -9,7 +8,27 @@ export type CurrencyCode =
   | "CNY"
   | "CAD"
   | "AUD"
-  | "SGD";
+  | "BRL"
+  | "CZK"
+  | "DKK"
+  | "HKD"
+  | "HUF"
+  | "IDR"
+  | "ILS"
+  | "INR"
+  | "ISK"
+  | "KRW"
+  | "MXN"
+  | "MYR"
+  | "NOK"
+  | "NZD"
+  | "PHP"
+  | "RON"
+  | "SEK"
+  | "SGD"
+  | "THB"
+  | "TRY"
+  | "ZAR";
 
 export interface Currency {
   code: CurrencyCode;
