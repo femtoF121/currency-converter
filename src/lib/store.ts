@@ -10,9 +10,11 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // localStorage
 import currencyReducer from "./features/converter/converterSlice";
+import historyReducer from "./features/history/historySlice";
 
 const rootReducer = combineReducers({
   currency: currencyReducer,
+  history: historyReducer,
 });
 
 const persistConfig = {

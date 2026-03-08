@@ -1,4 +1,4 @@
-import type { Currency } from "@/types/currency";
+import type { Currency, CurrencyCode } from "@/types/currency";
 
 export const CURRENCIES: Currency[] = [
   { code: "UAH", name: "Ukrainian Hryvnia", symbol: "₴" },
@@ -15,3 +15,6 @@ export const CURRENCIES: Currency[] = [
 ];
 
 export const REVALIDATION_TIME = 30 * 60 * 1000;
+
+export const INITIAL_FROM: CurrencyCode = "USD";
+export const INITIAL_TO: CurrencyCode = "UAH";
