@@ -8,7 +8,9 @@ import { cn } from "@/lib/utils";
 import { RefreshCcw, Wallet } from "lucide-react";
 
 export function ConverterHeader() {
-  const { lastUpdated, handleRefresh } = useConverterHeader();
+  const { lastUpdated, handleRefresh, status } = useConverterHeader();
+
+  console.log(status);
 
   return (
     <CardHeader>
@@ -31,7 +33,7 @@ export function ConverterHeader() {
                   : "bg-emerald-100 text-emerald-700",
               )}
             >
-              {status === "succeeded" ? "Live" : "Offline"} Currency Rates
+              {status === "failed" ? "Offline" : "Live"} Currency Rates
             </div>
           )}
           <div className="flex items-center justify-center gap-1">
