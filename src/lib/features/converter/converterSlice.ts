@@ -1,7 +1,7 @@
 import { ExchangeRates } from "@/types/currency";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ConversionState {
+interface ConverterState {
   rates: ExchangeRates;
   base: string;
   status: "idle" | "loading" | "succeeded" | "failed";
@@ -9,7 +9,7 @@ export interface ConversionState {
   lastUpdated: number | null;
 }
 
-const initialState: ConversionState = {
+const initialState: ConverterState = {
   rates: {},
   base: "USD",
   status: "idle",
@@ -18,7 +18,7 @@ const initialState: ConversionState = {
 };
 
 export const fetchRates = createAsyncThunk(
-  "currency/fetchRates",
+  "converter/fetchRates",
   async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(
@@ -42,7 +42,7 @@ export const fetchRates = createAsyncThunk(
   },
 );
 
-const currencySlice = createSlice({
+const converterSlice = createSlice({
   name: "converter",
   initialState,
   reducers: {},
@@ -66,4 +66,4 @@ const currencySlice = createSlice({
   },
 });
 
-export default currencySlice.reducer;
+export default converterSlice.reducer;

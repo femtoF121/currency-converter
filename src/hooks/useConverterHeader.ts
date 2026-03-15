@@ -5,7 +5,7 @@ import { useEffect } from "react";
 
 export function useConverterHeader() {
   const dispatch = useAppDispatch();
-  const { lastUpdated, status } = useAppSelector((state) => state.currency);
+  const { lastUpdated, status } = useAppSelector((state) => state.converter);
 
   useEffect(() => {
     function fetchIfNeeded() {
@@ -37,5 +37,6 @@ export function useConverterHeader() {
   return {
     lastUpdated,
     handleRefresh,
+    status,
   };
 }

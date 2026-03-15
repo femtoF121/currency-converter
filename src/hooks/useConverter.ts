@@ -13,7 +13,7 @@ export function useConverter() {
   const [to, setTo] = useState<CurrencyCode>(INITIAL_TO);
 
   const dispatch = useAppDispatch();
-  const { rates, status } = useAppSelector((state) => state.currency);
+  const { rates, status } = useAppSelector((state) => state.converter);
 
   const result = useMemo(
     () => calculateConversion(debouncedAmount, rates[from], rates[to]),
